@@ -1,0 +1,153 @@
+{
+  "identity": {
+    "name": "E1 Enterprise Swiss",
+    "description": "A high-precision, content-first design system for Enterprise Knowledge Management. Merges the objectivity of Swiss Style with the functional density of modern SaaS. Rejects 'friendly' rounded blobs in favor of structured, grid-aligned clarity.",
+    "tone": "Authoritative, Crystal Clear, Efficient, High-Bandwidth"
+  },
+  "typography": {
+    "fonts": {
+      "heading": {
+        "family": "Outfit",
+        "fallback": "sans-serif",
+        "weights": ["500", "600", "700"],
+        "usage": "Headings, KPIs, Navigation Labels"
+      },
+      "body": {
+        "family": "Inter",
+        "fallback": "sans-serif",
+        "weights": ["400", "500"],
+        "usage": "Long-form text, UI labels, Data tables"
+      }
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]",
+      "h2": "text-3xl font-semibold tracking-tight",
+      "h3": "text-xl font-medium tracking-normal",
+      "p": "text-base leading-relaxed text-zinc-600",
+      "small": "text-sm font-medium text-zinc-500 uppercase tracking-wider"
+    },
+    "guidelines": "Headings should be tight (tracking-tight). Labels should be uppercase and spaced (tracking-wider). Never use pure black for body text; use Zinc-600 to Zinc-800."
+  },
+  "colors": {
+    "mode": "light",
+    "palette": {
+      "background": {
+        "default": "#FFFFFF",
+        "subtle": "#FAFAFA",
+        "muted": "#F4F4F5"
+      },
+      "foreground": {
+        "default": "#09090B",
+        "muted": "#71717A",
+        "inverse": "#FFFFFF"
+      },
+      "primary": {
+        "default": "#18181B",
+        "foreground": "#FFFFFF",
+        "hover": "#27272A"
+      },
+      "accent": {
+        "default": "#2563EB",
+        "foreground": "#FFFFFF",
+        "light": "#EFF6FF"
+      },
+      "border": {
+        "default": "#E4E4E7",
+        "active": "#2563EB"
+      },
+      "status": {
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "error": "#EF4444",
+        "info": "#3B82F6"
+      }
+    },
+    "charts": [
+      "#2563EB",
+      "#10B981",
+      "#8B5CF6",
+      "#F59E0B",
+      "#64748B"
+    ]
+  },
+  "layout_strategies": {
+    "dashboard_grid": {
+      "type": "Bento Grid (Mode B)",
+      "classes": "grid grid-cols-1 md:grid-cols-4 gap-6 p-6",
+      "rules": "High density. No jagged bottoms. Use 'col-span-2' for main metrics."
+    },
+    "search_interface": {
+      "type": "Focused Center",
+      "structure": "Central input field (h-16, text-lg) with instant-results dropdown. RAG Chat appears as a slide-over or split-pane on the right.",
+      "visuals": "Input field should have a 'glow' effect on focus (ring-4 ring-blue-500/10)."
+    },
+    "document_upload": {
+      "type": "Tracing Beam Dropzone",
+      "visuals": "Large dashed area that animates/lights up on drag-over. Use 'border-dashed border-2 border-zinc-200' by default, 'border-blue-500 bg-blue-50' on hover."
+    },
+    "spacing": {
+      "container_padding": "p-6 md:p-8",
+      "section_gap": "gap-8",
+      "item_gap": "gap-4"
+    }
+  },
+  "components": {
+    "buttons": {
+      "radius": "rounded-md",
+      "default": "bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 font-medium transition-all shadow-sm active:scale-[0.98]",
+      "ghost": "bg-transparent hover:bg-zinc-100 text-zinc-900",
+      "outline": "border border-zinc-200 bg-transparent hover:bg-zinc-50 text-zinc-900"
+    },
+    "cards": {
+      "style": "bg-white border border-zinc-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200",
+      "padding": "p-6"
+    },
+    "inputs": {
+      "style": "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+    },
+    "navigation": {
+      "sidebar": "w-64 border-r border-zinc-200 bg-zinc-50/50 flex flex-col h-full",
+      "topbar": "h-16 border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-50 px-6 flex items-center justify-between"
+    }
+  },
+  "motion": {
+    "defaults": {
+      "duration": "duration-200",
+      "ease": "ease-out"
+    },
+    "micro_interactions": {
+      "hover_lift": "hover:-translate-y-0.5 transition-transform",
+      "button_press": "active:scale-95"
+    },
+    "entrance": {
+      "list_stagger": "animate-in fade-in slide-in-from-bottom-4 duration-500"
+    }
+  },
+  "assets": {
+    "icons": {
+      "library": "lucide-react",
+      "style": "stroke-width={1.5} size={20} className='text-zinc-500'"
+    },
+    "images": {
+      "login_background": "https://images.unsplash.com/photo-1762849538488-f34e77b50655?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjB3aGl0ZSUyMGFyY2hpdGVjdHVyZSUyMGRldGFpbCUyMGdsYXNzfGVufDB8fHx8MTc3MTAwMTAxMnww&ixlib=rb-4.1.0&q=85",
+      "logo_placeholder": "Use a simple geometric shape (e.g., a square with a cut corner) using CSS or an SVG icon."
+    }
+  },
+  "universal_rules": [
+    "No gradients on text.",
+    "No full-screen heavy gradients. Use subtle noise or white space.",
+    "Borders are your friend. Use 1px zinc-200 borders to define space.",
+    "Data-Density: High. Don't waste space in the dashboard.",
+    "Contrast: Text must be accessible. Avoid gray-on-gray for essential text.",
+    "Interactive elements must always have a hover state.",
+    "Use 'sonner' for toasts.",
+    "Use 'recharts' or 'shadcn charts' for analytics."
+  ],
+  "instructions_to_main_agent": [
+    "1. Update tailwind.config.js to use the 'zinc' color palette for grays and 'blue' for primary/accent.",
+    "2. Install 'lucide-react', 'recharts', 'clsx', 'tailwind-merge' if missing.",
+    "3. Create a 'Layout' component that handles the Sidebar + Header structure.",
+    "4. Implement the 'AuthLayout' for Login/Register using the split-screen design.",
+    "5. Ensure all interactive elements have 'data-testid' attributes."
+  ]
+}
