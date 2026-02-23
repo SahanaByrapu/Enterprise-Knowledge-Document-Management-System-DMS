@@ -36,7 +36,7 @@ Build an Enterprise Knowledge Document Management System using React JS frontend
 - [x] Role-based access control
 - [x] Audit logging
 
-## What's Been Implemented (Feb 2026)
+## What's Been Implemented 
 1. **Authentication System**
    - JWT-based login/register
    - Role-based access (admin, user, viewer)
