@@ -15,7 +15,8 @@ import bcrypt
 import io
 import json
 import numpy as np
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -25,8 +26,8 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Emergent LLM Key
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+# OPENAI LLM Key
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 
 # JWT settings
 JWT_SECRET = os.environ.get('JWT_SECRET', 'default-secret-key')
@@ -542,14 +543,20 @@ Always cite which document the information comes from when possible.
 Context from documents:
 {context}"""
     
-    # Use Emergent LLM integration
+    # Use OPENAI_API_KEY LLM integration
     try:
-        chat = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
-            session_id=f"rag-{session_id}",
-            system_message=system_message
-        ).with_model("openai", "gpt-4o")
         
+        chat_instance = ChatOpenAI(
+        model="gpt-4o",   # or gpt-4.1
+        api_key=OPENAI_API_KEY,
+        temperature=0.7
+         )
+
+        messages = [
+        SystemMessage(content=system_prompt),
+        HumanMessage(content=user_prompt)
+         ] 
+    
         # Build conversation with history
         full_conversation = ""
         for h in history[-10:]:
@@ -560,12 +567,15 @@ Context from documents:
         
         full_conversation += f"User: {message.message}"
         
-        user_message = UserMessage(text=full_conversation if full_conversation else message.message)
-        assistant_message = await chat.send_message(user_message)
+       response = await chat_instance.ainvoke(messages)
+        response_text = response.content
         
-    except Exception as e:
-        logger.error(f"LLM API error: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error generating response: {str(e)}")
+     except Exception as e:
+        logging.error(f"Error calling LLM: {e}")
+        response_text = (
+        "I apologize, but I encountered an error processing your request. "
+        f"Please try again. Error: {str(e)}"
+        )
     
     # Save to history
     timestamp = datetime.now(timezone.utc).isoformat()
@@ -582,7 +592,7 @@ Context from documents:
         "session_id": session_id,
         "user_id": user["id"],
         "role": "assistant",
-        "content": assistant_message,
+        "content": response_text,
         "timestamp": timestamp
     })
     
