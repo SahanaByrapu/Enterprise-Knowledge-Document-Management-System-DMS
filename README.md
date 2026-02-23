@@ -1,122 +1,88 @@
-#### Enterprise Knowledge - Document Management System (DMS)
+# Enterprise Knowledge Document Management System - PRD
 
+## Original Problem Statement
+Build an Enterprise Knowledge Document Management System using React JS frontend covering:
+- Document Upload UI: Upload/Index, Indexing status
+- Knowledge Search UI: Semantic search, RAG chat
+- Analytics Dashboard: Access trends, Top queries
+- Admin Console: Roles & permissions, Audit logs
 
-Full-Stack Architecture Diagram
+## User Choices
+- LLM: OpenAI GPT-4o (via Open-API LLM Key)
+- Documents: PDF, DOCX, TXT, XLSX, PPTX
+- Auth: JWT-based custom authentication
+- Theme: Light mode, Swiss-style design
 
+## Architecture
+- **Frontend**: React 19 + Tailwind CSS + Shadcn/UI
+- **Backend**: FastAPI + Motor (async MongoDB)
+- **Database**: MongoDB
+- **AI**: Open API LLM integration (OpenAI GPT-4o)
+- **Search**: Keyword-based similarity search
 
-                        ┌──────────────────────────────┐
-                        │         Frontend Layer        │
-                        │  React dashboards / RAG UI    │
-                        └─────────────┬────────────────┘
-                                      │
-          ┌─────────────┬─────────────┴─────────────┬─────────────┐
-          │             │                           │             │
-|--------------------|-----------------------|----------------------|----------------|
-|Document Upload UI |   Knowledge Search UI  |    Analytics Dashboard | Admin Console|
-|-------------------|-------------------------|-------------------|----------------------|
-|- Upload / Index   |  - Semantic search     |   - Access trends |      - Roles & permissions|
-| - Indexing status |   - RAG chat       |        - Top queries   |      - Audit logs|
+## User Personas
+1. **Knowledge Workers**: Upload/search documents, use RAG chat
+2. **Administrators**: Manage users, roles, view audit logs
+3. **Viewers**: Read-only access to search and documents
 
-                                      │
-                                      ▼
-                             ┌───────────────┐
-                             │ API Gateway    │
-                             │ Auth / RBAC    │
-                             │ Rate-limiting │
-                             └──────┬────────┘
-                                    │
-                                    ▼
-                          ┌──────────────────────┐
-                          │ Backend Services     │
-                          │ - Document Store     │
-                          │ - RAG AI Backend     │
-                          │ - Workflow Engine    │
-                          └──────────┬───────────┘
-                                     │
-                   ┌─────────────────┴─────────────────┐
-                   │                                   │
-          ┌────────▼────────┐                 ┌────────▼────────┐
-          │ ML Serving Layer │                 │ Data Layer      │
-          │ - NLP Classification│               │ - Elasticsearch│
-          │ - Summarization    │               │ - Vector DB    │
-          │ - Semantic Search  │               │ - S3 Storage   │
-          └────────┬─────────┘                 └────────┬────────┘
-                   │                                   │
-                   ▼                                   ▼
-           ┌─────────────┐                     ┌─────────────┐
-           │ ML Pipelines │                     │ Monitoring &│
-           │ ETL → Train  │                     │ Observability│
-           │ → Deploy     │                     │ Prometheus /│
-           │ NLP & RAG    │                     │ Grafana /   │
-           └─────────────┘                     │ Logging     │
-                                               └─────────────┘
+## Core Requirements
+- [x] User authentication (register/login/logout)
+- [x] Document upload with multi-format support
+- [x] Document indexing with text extraction
+- [x] Keyword-based semantic search
+- [x] RAG chat with document context
+- [x] Analytics dashboard with charts
+- [x] Admin user management
+- [x] Role-based access control
+- [x] Audit logging
 
+## What's Been Implemented (Feb 2026)
+1. **Authentication System**
+   - JWT-based login/register
+   - Role-based access (admin, user, viewer)
+   - Secure password hashing
 
+2. **Document Management**
+   - File upload (PDF, DOCX, TXT, XLSX, PPTX)
+   - Text extraction and chunking
+   - Indexing status tracking
+   - Document deletion
 
-	•	High-value enterprise system → showcases RAG AI backend
-	•	Works seamlessly with NLP / retrieval / semantic search
-	•	Strong integration of ML + workflow automation
+3. **Search & RAG**
+   - Keyword-based similarity search
+   - RAG chat with Open-AI LLM
+   - Source document citations
+   - Chat history persistence
 
-ML Opportunities:
-	•	NLP for document classification & summarization
-	•	Semantic search / RAG chatbot
-	•	User activity segmentation & retention
+4. **Analytics**
+   - Access trends (7-day chart)
+   - Top queries visualization
+   - User/document/query counts
 
-Frontend / Dashboard Ideas:
-	•	Knowledge search & retrieval interface
-	•	Document upload & indexing status
-	•	Usage analytics dashboard (top queries, document access)
+5. **Admin Console**
+   - User list with role management
+   - Audit log viewer
+   - User deletion
 
+## Prioritized Backlog
 
+### P0 (Critical)
+- All core features implemented ✅
 
-Backend + Tech Stack:
-	•	FastAPI backend
-	•	Elasticsearch / Vector DB
-	•	React frontend + dashboards
-	•	Workflow engine triggers indexing & ML pipelines
+### P1 (High)
+- [ ] Add real-time document list updates
+- [ ] Implement file preview capability
+- [ ] Add document categories/tags
 
+### P2 (Medium)
+- [ ] Email notifications for important actions
+- [ ] Export analytics reports
+- [ ] Bulk document operations
+- [ ] Advanced search filters
 
-src/
-├── components/
-│   ├── Auth/
-│   │   ├── LoginForm.jsx        # JS UI component
-│   │   └── ResetPassword.jsx
-│   ├── Dashboard/
-│   │   └── SummaryCards.jsx
-│   ├── Documents/
-│   │   ├── DocumentCard.jsx
-│   │   ├── DocumentList.jsx
-│   │   └── UploadForm.jsx
-│   └── Shared/
-│       ├── Modal.jsx
-│       └── Toast.jsx
-├── pages/
-│   ├── LoginPage.jsx
-│   ├── DashboardPage.jsx
-│   └── DocumentsPage.jsx
-├── services/
-│   ├── authService.ts          # TS service for auth logic
-│   ├── documentService.ts      # TS service for API calls
-│   └── workflowService.ts
-├── utils/
-│   ├── validation.ts
-│   └── constants.ts
-└── App.jsx
-
-
-## Intitialize project
-
-```
-npx create-react-app dms-frontend --template typescript
-```
-
-
-4️⃣ Suggested Frontend Workflows
-	1.	Document Upload Flow:
-	•	User drags file → UploadForm validates → Sends API request → On success, update DocumentList + show notification.
-	2.	Document Preview Flow:
-	•	User clicks document → DocumentPreview opens modal → Fetch latest version → Show inline preview.
-	3.	Search & Filter Flow:
-	•	User types in SearchBar → debounce → API call → FilterPanel refines results → Update DocumentList.
-	4.	Workflow / Approval Flow:
-	•	User submits document → workflow API triggered → Approvers notified → Comments & status displayed on UI.
+## Next Action Items
+1. Add document preview for uploaded files
+2. Implement document tagging/categorization
+3. Add bulk upload functionality
+4. Create user activity reports
+5. Implement document sharing between users
